@@ -14,22 +14,22 @@ import {
 } from '../validations/contactValidationSchema.js';
 import { validateId } from '../middleware/validateId.js';
 
-export const router = Router();
+export const contactRouter = Router();
 
-router.get('/', ctrlWrapper(getAllContactController));
+contactRouter.get('/', ctrlWrapper(getAllContactController));
 
-router.get('/:id', validateId, ctrlWrapper(getContactByIdController));
+contactRouter.get('/:id', validateId, ctrlWrapper(getContactByIdController));
 
-router.post(
+contactRouter.post(
   '/',
   validationBody(contactsAddSchema),
   ctrlWrapper(createContactController),
 );
 
-router.patch(
+contactRouter.patch(
   '/:id',
   validationBody(contactsUpdateSchema),
   ctrlWrapper(updateContactController),
 );
 
-router.delete('/:id', ctrlWrapper(deleteContactController));
+contactRouter.delete('/:id', ctrlWrapper(deleteContactController));

@@ -3,9 +3,9 @@ import cors from 'cors';
 
 import { env } from './utils/env.js';
 
-import { router } from './routers/contactsRouters.js';
 import { notFoundRouterHandler } from './middleware/notFoundRouterHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { router } from './routers/index.js';
 
 const port = env('PORT');
 export const startServer = () => {
@@ -13,7 +13,7 @@ export const startServer = () => {
   app.use(cors());
   app.use(express.json());
 
-  app.use('/contacts', router);
+  app.use(router);
 
   app.use(notFoundRouterHandler);
   app.use(errorHandler);
