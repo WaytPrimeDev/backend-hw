@@ -11,3 +11,6 @@ export const SORT_BY = [
 
 export const EMAIL_REGEXP =
   /^(?!\.)(?!.*\.\.)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,}$/;
+
+export const ONE_DAY = 1000 * 24 * 60 * 60;
+export const FIFTEEN_MINUTES = 1000 * 15 * 60;
