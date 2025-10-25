@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import { env } from './utils/env.js';
 
@@ -10,6 +11,7 @@ import { router } from './routers/index.js';
 const port = env('PORT');
 export const startServer = () => {
   const app = express();
+  app.use(cookieParser());
   app.use(cors());
   app.use(express.json());
 

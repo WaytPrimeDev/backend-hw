@@ -46,3 +46,30 @@ export const signin = async (payload) => {
 
   return userSession;
 };
+
+export const refresh = async (cookies) => {
+  const { refreshToken, sessionId } = cookies;
+  const oldSession = await SessionModel.findOne({
+    _id: sessionId,
+    refreshToken,
+  });
+  if (!oldSession) throw createHttpError(401, 'Session not found');
+
+  if (new Date() > oldSession.refreshTokenValidUntil)
+    throw createHttpError(401, 'Session token expired');
+
+  await SessionModel.deleteOne({ _id: sessionId });
+
+  const sessionConfig = sessionSettings();
+
+  const userSession = await SessionModel.create({
+    userId: oldSession.userId,
+    ...sessionConfig,
+  });
+  return userSession;
+};
+
+export const signout = async (sessionId) => {
+  const deleteSession = await SessionModel.findOneAndDelete(sessionId);
+  return deleteSession;
+};

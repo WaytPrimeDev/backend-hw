@@ -21,6 +21,10 @@ export const getAllContacts = async ({
     query.where(SORT_BY[2]).equals(filter.isFavorite);
   }
 
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+
   const count = await query.clone().countDocuments();
 
   const data = await query
@@ -36,8 +40,8 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (id) => {
-  const contact = await ContactModel.findById(id);
+export const getContactById = async (filter) => {
+  const contact = await ContactModel.findOne(filter);
   return contact;
 };
 
@@ -46,16 +50,20 @@ export const createContact = async (payload) => {
   return newContact;
 };
 
-export const updateContact = async (filter, data, options = {}) => {
-  const result = await ContactModel.findOneAndUpdate({ _id: filter }, data, {
-    new: true,
-    ...options,
-  });
+export const updateContact = async ({ id, userId }, data, options = {}) => {
+  const result = await ContactModel.findOneAndUpdate(
+    { _id: id, userId },
+    data,
+    {
+      new: true,
+      ...options,
+    },
+  );
 
   return result;
 };
 
-export const deleteContact = async (id) => {
-  const result = await ContactModel.findOneAndDelete({ _id: id });
+export const deleteContact = async (id, userId) => {
+  const result = await ContactModel.findOneAndDelete({ _id: id, userId });
   return result;
 };

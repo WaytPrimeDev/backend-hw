@@ -14,13 +14,14 @@ export const getAllContactController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortOrder, sortBy } = parseSortParams(req.query);
   const filter = parseFilter(req.query);
+  const { _id: userId } = req.user;
 
   const contacts = await getAllContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
-    filter,
+    filter: { ...filter, userId },
   });
 
   if (!contacts) {
@@ -33,9 +34,10 @@ export const getAllContactController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res) => {
+  const { _id: userId } = req.user;
   const { id } = req.params;
 
-  const contact = await getContactById(id);
+  const contact = await getContactById({ _id: id, userId });
 
   if (!contact) throw createHttpError(404, `contact with id ${id} not found`);
 
@@ -46,7 +48,8 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const newContact = await createContact(req.body);
+  const { _id: userId } = req.user;
+  const newContact = await createContact({ userId, ...req.body });
 
   if (!newContact) throw createHttpError(500, 'contact don`t create');
 
@@ -58,8 +61,9 @@ export const createContactController = async (req, res) => {
 
 export const updateContactController = async (req, res) => {
   const { id } = req.params;
+  const { _id: userId } = req.user;
 
-  const result = await updateContact(id, req.body);
+  const result = await updateContact({ id, userId }, req.body);
 
   if (!result) throw createHttpError(404, `contact with id ${id} not found`);
 
@@ -70,8 +74,9 @@ export const updateContactController = async (req, res) => {
 };
 
 export const deleteContactController = async (req, res) => {
+  const { _id: userId } = req.user;
   const { id } = req.params;
-  const result = await deleteContact(id);
+  const result = await deleteContact(id, userId);
 
   if (!result) throw createHttpError(404, `contact with id ${id} not found`);
 
