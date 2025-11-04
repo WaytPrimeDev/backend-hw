@@ -8,3 +8,5 @@ export const SORT_BY = [
   'contactType',
   'phoneNumber',
 ];
+
+export const EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
