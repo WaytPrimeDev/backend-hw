@@ -1,8 +1,16 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validationBody } from '../utils/validationsBody.js';
-import { signupSchema } from '../validations/authValidationSchema.js';
-import { signupController } from '../controllers/authController.js';
+import {
+  signinSchema,
+  signupSchema,
+} from '../validations/authValidationSchema.js';
+import {
+  logoutController,
+  refreshController,
+  signinController,
+  signupController,
+} from '../controllers/authController.js';
 
 export const authRouter = Router();
 
@@ -11,3 +19,12 @@ authRouter.post(
   validationBody(signupSchema),
   ctrlWrapper(signupController),
 );
+authRouter.post(
+  '/signin',
+  validationBody(signinSchema),
+  ctrlWrapper(signinController),
+);
+
+authRouter.post('/refresh', ctrlWrapper(refreshController));
+
+authRouter.post('/logout', ctrlWrapper(logoutController));

@@ -10,3 +10,6 @@ export const SORT_BY = [
 ];
 
 export const EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+export const ACCESS_TOKEN_VALID_UNTIL = 1000 * 15 * 60;
+export const REFRESH_TOKEN_VALID_UNTIL = 1000 * 60 * 60 * 24;

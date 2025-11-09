@@ -10,3 +10,7 @@ export const signupSchema = Joi.object({
     'string.min': 'password length min is 3 symbol',
   }),
 });
+export const signinSchema = Joi.object({
+  email: Joi.string().pattern(EMAIL_REGEXP).required(),
+  password: Joi.string().required(),
+});

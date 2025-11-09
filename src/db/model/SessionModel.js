@@ -4,9 +4,9 @@ import { errorSaveHandler, updateSettings } from '../hooks/hooks.js';
 const sessionSchema = new Schema(
   {
     userId: {
-      type: Schema.types.userId,
+      type: Schema.Types.ObjectId,
       required: true,
-      match: 'User1',
+      ref: 'User1',
     },
     accessToken: {
       type: String,

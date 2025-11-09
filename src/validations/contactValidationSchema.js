@@ -7,7 +7,7 @@ export const contactsAddSchema = Joi.object({
   email: Joi.string().email().required().messages({
     'string.email': 'email must have to be email',
     'string.empty': 'email don`t be void',
-    'any.required': 'email is requaired!',
+    'any.required': 'email is required!',
   }),
   isFavorite: Joi.boolean(),
   contactType: Joi.string()
