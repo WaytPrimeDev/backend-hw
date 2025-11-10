@@ -27,4 +27,4 @@ authRouter.post(
 
 authRouter.post('/refresh', ctrlWrapper(refreshController));
 
-authRouter.post('/logout', ctrlWrapper(logoutController));
+authRouter.post('/signout', ctrlWrapper(logoutController));

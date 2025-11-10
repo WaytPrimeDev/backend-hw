@@ -13,6 +13,10 @@ export const getAllContacts = async ({
 
   const query = ContactModel.find();
 
+  if (filter.userId) {
+    query.where('userId').equals(filter.userId);
+  }
+
   if (filter.contactType && filter.contactTypeValue) {
     query.where(SORT_BY[3]).equals(filter.contactTypeValue);
   }
@@ -36,8 +40,8 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (id) => {
-  const contact = await ContactModel.findById(id);
+export const getContactById = async ({ id, userId }) => {
+  const contact = await ContactModel.findOne({ _id: id, userId });
   return contact;
 };
 
@@ -46,11 +50,15 @@ export const createContact = async (payload) => {
   return newContact;
 };
 
-export const updateContact = async (filter, data, options = {}) => {
-  const result = await ContactModel.findOneAndUpdate({ _id: filter }, data, {
-    new: true,
-    ...options,
-  });
+export const updateContact = async ({ id, userId }, data, options = {}) => {
+  const result = await ContactModel.findOneAndUpdate(
+    { _id: id, userId },
+    data,
+    {
+      new: true,
+      ...options,
+    },
+  );
 
   return result;
 };
