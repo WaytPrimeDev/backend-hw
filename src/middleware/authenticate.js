@@ -18,7 +18,7 @@ export const authenticate = async (req, res, next) => {
 
   const session = await SessionModel.findOne({
     _id: sessionId,
-    refreshToken: token,
+    accessToken: token,
   });
   if (!session) throw createHttpError(401, 'not authorized');
 
@@ -27,6 +27,7 @@ export const authenticate = async (req, res, next) => {
 
   const user = await UserModel.findOne({ _id: session.userId });
   if (!user) throw createHttpError(401, 'not authorized');
+  console.log(session.refreshTokenValidUntil);
 
   req.user = user;
   req.session = session;
