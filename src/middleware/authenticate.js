@@ -3,10 +3,14 @@ import { SessionModel } from '../db/model/SessionModel.js';
 import { UserModel } from '../db/model/UserModel.js';
 
 export const authenticate = async (req, res, next) => {
-  const [bearer, token] = (req.headers.authorization || '').split(' ');
+  const { authorization } = req.headers;
+  if (!authorization)
+    throw createHttpError(401, 'invalid authorization format');
+
+  const [bearer, token] = authorization.split(' ');
 
   if (bearer !== 'Bearer')
-    throw createHttpError(401, 'token authorization must be have ');
+    throw createHttpError(401, 'invalid authorization format');
   const { sessionId } = req.cookies;
   if (!sessionId) {
     return next(createHttpError(401, 'not authorized'));
