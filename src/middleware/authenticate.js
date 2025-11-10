@@ -16,8 +16,14 @@ export const authenticate = async (req, res, next) => {
     return next(createHttpError(401, 'not authorized'));
   }
 
-  const session = await SessionModel.findOne({ _id: sessionId });
+  const session = await SessionModel.findOne({
+    _id: sessionId,
+    refreshToken: token,
+  });
   if (!session) throw createHttpError(401, 'not authorized');
+
+  if (session.refreshTokenValidUntil < Date.now())
+    throw createHttpError(401, 'token expired');
 
   const user = await UserModel.findOne({ _id: session.userId });
   if (!user) throw createHttpError(401, 'not authorized');
