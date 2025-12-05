@@ -22,12 +22,11 @@ export const authenticate = async (req, res, next) => {
   });
   if (!session) throw createHttpError(401, 'not authorized');
 
-  if (session.refreshTokenValidUntil < Date.now())
+  if (session.accessTokenValidUntil < Date.now())
     throw createHttpError(401, 'token expired');
 
   const user = await UserModel.findOne({ _id: session.userId });
   if (!user) throw createHttpError(401, 'not authorized');
-  console.log(session.refreshTokenValidUntil);
 
   req.user = user;
   req.session = session;

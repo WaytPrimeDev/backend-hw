@@ -40,4 +40,4 @@ contactSchema.post('save', errorSaveHandler);
 contactSchema.post('findOneAndUpdate', errorSaveHandler);
 
 contactSchema.pre('findOneAndUpdate', updateSettings);
-export const ContactModel = model('Contact', contactSchema);
+export const ContactModel = model('Contact1', contactSchema);

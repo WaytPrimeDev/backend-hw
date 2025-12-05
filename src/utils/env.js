@@ -9,5 +9,5 @@ export const env = (name, defaultValue) => {
     return defaultValue;
   }
 
-  throw new Error('missin env name');
+  throw new Error('missing env name');
 };

@@ -15,6 +15,7 @@ export const signup = async (data) => {
 export const signin = async ({ email, password }) => {
   const user = await UserModel.findOne({ email });
   if (!user) throw createHttpError(401, 'email or password not correct');
+  if (!user.verification) throw createHttpError(401, 'must be verification');
 
   const validPassword = await compare(password, user.password);
   if (!validPassword)

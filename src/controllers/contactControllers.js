@@ -48,7 +48,7 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const userId = req.userId;
+  const userId = req.user;
   const newContact = await createContact({ ...req.body, userId });
 
   if (!newContact) throw createHttpError(500, 'contact don`t create');

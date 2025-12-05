@@ -9,11 +9,18 @@ const userSchema = new Schema(
       required: true,
     },
     email: {
+      required: true,
+      unique: true,
       type: String,
       match: EMAIL_REGEXP,
     },
     password: {
       type: String,
+      required: true,
+    },
+    verification: {
+      type: Boolean,
+      default: false,
       required: true,
     },
   },
